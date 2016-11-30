@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Tocbot</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/tocbot.css">
+
+    <!-- <link rel="stylesheet" href="/test/mocha.css">
+    <script src="/test/mocha.js"></script> -->
+  </head>
+  <body>
+    <main data-reactroot="" data-reactid="1" data-react-checksum="299795816"><div class="hero" data-reactid="2"><div class="hero-inner reverse" data-reactid="3"><h1 class="flush hard" data-reactid="4">Tocbot</h1><h3 class="max-width--large anchor--middle line--tight skip-toc soft flush--top hard--top" data-reactid="5">Generate a table of contents based on the heading structure of an html document.</h3><div class="soft-triple--left push-triple--left" data-reactid="6"><iframe src="https://ghbtns.com/github-btn.html?user=tscanlin&amp;repo=tocbot&amp;type=star&amp;count=true&amp;size=large" frameborder="0" scrolling="0" width="160px" height="30px" data-reactid="7"></iframe></div></div></div><div class="max-width--large anchor--middle" data-reactid="8"><input type="checkbox" id="toc" class="display--none" data-reactid="9"/><label class="toc-icon cursor--pointer button push" for="toc" data-reactid="10">Menu</label><nav class="toc js-toc soft-double transition--300 position--absolute" data-reactid="11"></nav><div class="content js-toc-content soft-double" data-reactid="12"><div data-reactid="13"><div data-reactid="14"><h1 class="display--none"><br><a href="http://tscanlin.github.io/tocbot">Tocbot</a><br><a href="https://travis-ci.org/tscanlin/tocbot" target="_blank"><img src="https://travis-ci.org/tscanlin/tocbot.svg?branch=master" alt="travis-ci" /></a><br></h1>
+
+
+<p>Tocbot builds a <a href="https://en.wikipedia.org/wiki/Table_of_contents">table of contents</a> (TOC) from headings in an HTML document. This is useful for documentation websites or long markdown pages because it makes them easier to navigate. This library was inspired by <a href="http://gregfranko.com/jquery.tocify.js/">Tocify</a>, the main difference is that Tocbot uses native DOM methods and avoids the jQuery &amp; jQuery UI dependencies.</p>
+<h2 id="get-started">Get Started</h2>
+<p>You can use npm to install it or include the script on the page with HTML.</p>
+<p><a href="https://github.com/tscanlin/tocbot/releases/"><strong>Download it here</strong></a></p>
+<h3 id="include-js">Include JS</h3>
+<p>Install it with npm.</p>
+<pre><code class="lang-sh">npm <span class="hljs-keyword">install</span> <span class="hljs-comment">--save tocbot</span>
+</code></pre>
+<p>OR</p>
+<p>Include the script at the bottom of the page before the closing body tag.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"/assets/js/tocbot.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<h3 id="include-css">Include CSS</h3>
+<p>CSS is used for expanding &amp; collapsing groupings and some basic styling.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"/assets/css/tocbot.css"</span>&gt;</span>
+</code></pre>
+<p>OR</p>
+<p>If you installed it with npm and use sass / postcss you might try importing the styles from &#39;node_modules&#39;, <a href="https://github.com/sass/node-sass#includepaths">see the includePath option documentation for more info</a></p>
+<pre><code class="lang-scss">@<span class="hljs-keyword">import</span> <span class="hljs-string">'tocbot/src/scss/tocbot-core'</span>;
+@<span class="hljs-keyword">import</span> <span class="hljs-string">'tocbot/src/scss/tocbot-default-theme'</span>;
+</code></pre>
+<h3 id="usage">Usage</h3>
+<p>Initialize the script</p>
+<pre><code class="lang-javascript"><span class="hljs-selector-tag">tocbot</span><span class="hljs-selector-class">.init</span>({
+  <span class="hljs-comment">// Where to render the table of contents.</span>
+  <span class="hljs-attribute">tocSelector</span>: <span class="hljs-string">'.js-toc'</span>,
+  <span class="hljs-comment">// Where to grab the headings to build the table of contents.</span>
+  <span class="hljs-attribute">contentSelector</span>: <span class="hljs-string">'.js-toc-content'</span>,
+  <span class="hljs-comment">// Which headings to grab inside of the contentSelector element.</span>
+  <span class="hljs-attribute">headingSelector</span>: <span class="hljs-string">'h1, h2, h3'</span>,
+});
+</code></pre>
+<p>If content in the div has changed then trigger a refresh (optionally with new options).</p>
+<pre><code class="lang-javascript">tocbot.refresh()<span class="hljs-comment">;</span>
+</code></pre>
+<h2 id="requirements">Requirements</h2>
+<p>This library uses <strong>vanilla JavaScript</strong>. It is less than 400 bytes of CSS and about 4Kb of JavaScript (minified and gzipped). The only dependency this script has is <a href="https://github.com/cferdinandi/smooth-scroll">Smooth Scroll</a> (which has no dependencies).</p>
+<p>This script works in <strong>all modern browsers and IE 7+</strong>.</p>
+<p>Make sure rendered headings have id attributes, some markdown libraries (like <a href="https://github.com/chjj/marked">marked</a>) already do this.</p>
+<h2 id="api">API</h2>
+<h3 id="options">Options</h3>
+<pre><code class="lang-javascript"><span class="hljs-comment">// Where to render the table of contents.</span>
+<span class="hljs-attribute">tocSelector</span>: <span class="hljs-string">'.js-toc'</span>,
+<span class="hljs-comment">// Where to grab the headings to build the table of contents.</span>
+<span class="hljs-attribute">contentSelector</span>: <span class="hljs-string">'.js-toc-content'</span>,
+<span class="hljs-comment">// Which headings to grab inside of the contentSelector element.</span>
+<span class="hljs-attribute">headingSelector</span>: <span class="hljs-string">'h1, h2, h3'</span>,
+
+<span class="hljs-comment">// Headings that match the ignoreSelector will be skipped.</span>
+<span class="hljs-attribute">ignoreSelector</span>: <span class="hljs-string">'.js-toc-ignore'</span>,
+<span class="hljs-comment">// Main class to add to links.</span>
+<span class="hljs-attribute">linkClass</span>: <span class="hljs-string">'toc-link'</span>,
+<span class="hljs-comment">// Extra classes to add to links.</span>
+<span class="hljs-attribute">extraLinkClasses</span>: <span class="hljs-string">''</span>,
+<span class="hljs-comment">// Class to add to active links,</span>
+<span class="hljs-comment">// the link corresponding to the top most heading on the page.</span>
+<span class="hljs-attribute">activeLinkClass</span>: <span class="hljs-string">'is-active-link'</span>,
+<span class="hljs-comment">// Main class to add to lists.</span>
+<span class="hljs-attribute">listClass</span>: <span class="hljs-string">'toc-list'</span>,
+<span class="hljs-comment">// Extra classes to add to lists.</span>
+<span class="hljs-attribute">extraListClasses</span>: <span class="hljs-string">''</span>,
+<span class="hljs-comment">// Class that gets added when a list should be collapsed.</span>
+<span class="hljs-attribute">isCollapsedClass</span>: <span class="hljs-string">'is-collapsed'</span>,
+<span class="hljs-comment">// Class that gets added when a list should be able</span>
+<span class="hljs-comment">// to be collapsed but isn't necessarily collpased.</span>
+<span class="hljs-attribute">collapsibleClass</span>: <span class="hljs-string">'is-collapsible'</span>,
+<span class="hljs-comment">// Class to add to list items.</span>
+<span class="hljs-attribute">listItemClass</span>: <span class="hljs-string">'toc-list-item'</span>,
+<span class="hljs-comment">// How many heading levels should not be collpased.</span>
+<span class="hljs-comment">// For example, number 6 will show everything since</span>
+<span class="hljs-comment">// there are only 6 heading levels and number 0 will collpase them all.</span>
+<span class="hljs-comment">// The sections that are hidden will open</span>
+<span class="hljs-comment">// and close as you scroll to headings within them.</span>
+<span class="hljs-attribute">collapseDepth</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// smooth-scroll options object, see docs at:</span>
+<span class="hljs-comment">// https://github.com/cferdinandi/smooth-scroll</span>
+<span class="hljs-attribute">smoothScrollOptions</span>: {
+  <span class="hljs-attribute">easing</span>: <span class="hljs-string">'easeInOutCubic'</span>,
+  <span class="hljs-attribute">offset</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attribute">speed</span>: <span class="hljs-number">300</span>, <span class="hljs-comment">// animation duration.</span>
+  <span class="hljs-attribute">updateURL</span>: true
+},
+<span class="hljs-comment">// Headings offset between the headings and the top of the document.</span>
+<span class="hljs-attribute">headingsOffset</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// Timeout between events firing to make sure it's</span>
+<span class="hljs-comment">// not too rapid (for performance reasons).</span>
+<span class="hljs-attribute">throttleTimeout</span>: <span class="hljs-number">50</span>,
+<span class="hljs-comment">// Element to add the positionFixedClass to.</span>
+<span class="hljs-attribute">positionFixedSelector</span>: null,
+<span class="hljs-comment">// Fixed position class to add to make sidebar fixed after scrolling</span>
+<span class="hljs-comment">// down past the fixedSidebarOffset.</span>
+<span class="hljs-attribute">positionFixedClass</span>: <span class="hljs-string">'is-position-fixed'</span>,
+<span class="hljs-comment">// fixedSidebarOffset can be any number but by default is set</span>
+<span class="hljs-comment">// to auto which sets the fixedSidebarOffset to the sidebar</span>
+<span class="hljs-comment">// element's offsetTop from the top of the document on init.</span>
+<span class="hljs-attribute">fixedSidebarOffset</span>: <span class="hljs-string">'auto'</span>,
+<span class="hljs-comment">// includeHtml can be set to true to include the HTML markup from the</span>
+<span class="hljs-comment">// heading node instead of just including the textContent.</span>
+<span class="hljs-attribute">includeHtml</span>: false
+</code></pre>
+<h3 id="methods">Methods</h3>
+<h4 id="-init">.init</h4>
+<p>Initialize tocbot with an options object.</p>
+<pre><code class="lang-javascript"><span class="hljs-selector-tag">tocbot</span><span class="hljs-selector-class">.init</span>(<span class="hljs-selector-tag">options</span>)
+</code></pre>
+<h4 id="-destroy">.destroy</h4>
+<p>Destroy tocbot and remove event listeners.</p>
+<pre><code class="lang-javascript"><span class="hljs-selector-tag">tocbot</span><span class="hljs-selector-class">.destroy</span>()
+</code></pre>
+<h4 id="-refresh">.refresh</h4>
+<p>Refresh tocbot if the document changes and it needs to be rebuilt.</p>
+<pre><code class="lang-javascript"><span class="hljs-selector-tag">tocbot</span><span class="hljs-selector-class">.refresh</span>()
+</code></pre>
+<h2 id="roadmap">Roadmap</h2>
+<ul>
+<li>More tests</li>
+<li>Option for changing the url hash on scroll</li>
+<li>React.js support</li>
+</ul>
+<h2 id="changelog">Changelog</h2>
+<h3 id="v2-2-1">v2.2.1</h3>
+<h4 id="added">Added</h4>
+<ul>
+<li>[patch] Made bower.json reference unminified file.</li>
+</ul>
+<h3 id="v2-2-0">v2.2.0</h3>
+<h4 id="added">Added</h4>
+<ul>
+<li>[minor] Added bower.json to provide bower support.</li>
+</ul>
+<h3 id="v2-1-5">v2.1.5</h3>
+<h4 id="added">Added</h4>
+<ul>
+<li>[patch] Added <code>overflow-y: auto</code> to the <code>.toc selector so that it scrolls</code> (#17).</li>
+<li>[dev] Added to deploy script to commit /dist files to master.</li>
+<li>[dev] Added to package.json for cdnjs.</li>
+</ul>
+<h3 id="v2-1-4">v2.1.4</h3>
+<h4 id="added">Added</h4>
+<ul>
+<li>[patch] <code>includeHtml</code> option to mirror markup from the headings in the TOC (#14).</li>
+<li>[patch] <code>listItemClass</code> will be omitted if an empty string in passed.</li>
+<li>[dev] <code>test:watch</code> command.</li>
+<li>[dev] more tests.</li>
+</ul>
+<h3 id="v2-1-3">v2.1.3</h3>
+<h4 id="added">Added</h4>
+<ul>
+<li>[patch] <code>listItemClass</code> option to set classes on list items (#12).</li>
+</ul>
+<h3 id="v2-1-2">v2.1.2</h3>
+<h4 id="fixed">Fixed</h4>
+<ul>
+<li>[patch] prevent errors from being thrown when elements are not present and add tests.</li>
+</ul>
+<h3 id="v2-1-1">v2.1.1</h3>
+<h4 id="changed">Changed</h4>
+<ul>
+<li>[patch] update file size estimates in the docs.</li>
+<li>[patch] switch from throwing errors to using console.warn.</li>
+</ul>
+<h3 id="v2-1">v2.1</h3>
+<h4 id="added">Added</h4>
+<ul>
+<li>[minor] add <code>positionFixedSelector</code> option to specify the element to add a fixed position class to.</li>
+<li>[dev] use travis-ci for builds.</li>
+</ul>
+<h3 id="v2-0">v2.0</h3>
+<h4 id="added">Added</h4>
+<ul>
+<li>[major] smooth-scroll is included by default now.</li>
+<li>[patch] throttling support to improve performance, also the <code>throttleTimeout</code> option.</li>
+<li>[patch] new &quot;try it now&quot; option on documentation site.</li>
+</ul>
+<h4 id="changed">Changed</h4>
+<ul>
+<li>[minor] broke up scss files and separate tocbot styles better.</li>
+<li>[minor] default option for <code>contentSelector</code> to be <code>.js-toc-content</code>.</li>
+<li>[minor] default option for <code>ignoreSelector</code> to be <code>.js-toc-ignore</code>.</li>
+<li>[minor] default option for <code>collapsibleClass</code> to be <code>.is-collapsible</code>.</li>
+<li>[patch] reorder <code>default-options.js</code>.</li>
+<li>[patch] update documentation.</li>
+</ul>
+<h4 id="removed">Removed</h4>
+<ul>
+<li>[patch] dependency on classList to improve browser support.</li>
+</ul>
+<h4 id="fixed">Fixed</h4>
+<ul>
+<li>[minor] new and improved tests using jsdom.</li>
+<li>[dev] switched from gulp to npm scripts.</li>
+<li>[dev] switched from browserify to webpack.</li>
+<li>[dev] switched from swig to react for building the documentation.</li>
+</ul>
+<h3 id="v1-0">v1.0</h3>
+<ul>
+<li>First published source code.</li>
+</ul>
+<h2 id="contributing">Contributing</h2>
+<p>Contributions and suggestions are welcome! Please feel free to open an issue if you run into a problem or have a feature request. I&#39;ll do my best to respond in a timely fashion.</p>
+<p>If you want to open a pull request just fork the repo but please make sure all tests and lint pass.</p>
+<h3 id="running-tests">Running Tests</h3>
+<pre><code class="lang-bash">npm <span class="hljs-built_in">test</span>
+</code></pre>
+<h2 id="license">License</h2>
+<p><a href="&#39;http://opensource.org/licenses/MIT&#39;">MIT</a></p>
+</div></div></div><input type="checkbox" id="try-it-checkbox" class="display--none" data-reactid="15"/><div class="try-it-container push-triple--left transition--300" data-reactid="16"><label class="label" for="try-it-checkbox" data-reactid="17"><span class="button button--highlight is-closed" data-reactid="18">Try it</span><span class="button button--highlight is-open" data-reactid="19">Hide</span><a id="try-it-reset" href="javascript:void(0)" class="button button--plain" data-reactid="20">Reset</a></label><p class="flush weight--bold" data-reactid="21">Paste markdown in the box below.</p><textarea id="try-it-markdown" class="textarea" data-reactid="22"></textarea></div></div></main>
+
+    <script src="assets/js/tocbot.js"></script>
+    <script>
+      tocbot.init({
+        tocSelector: '.js-toc',
+        contentSelector: '.js-toc-content',
+        headingSelector: 'h1, h2, h3',
+        positionFixedSelector: '.js-toc',
+      });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.js"></script>
+    <script>
+      // Try it out
+      var markdownEl = document.querySelector('#try-it-markdown');
+      var tryItReset = document.querySelector('#try-it-reset');
+      var tryItCheckbox = document.querySelector('#try-it-checkbox');
+      var contentEl = document.querySelector('.js-toc-content');
+
+      var contentBackup = document.createElement('div');
+      contentBackup.id = 'content-backup';
+      contentBackup.innerHTML = contentEl.innerHTML;
+
+      markdownEl.addEventListener('change', function(event) {
+        var markdown = event.target.value;
+        contentEl.innerHTML = marked(markdown);
+        tocbot.refresh();
+      });
+
+      tryItReset.addEventListener('click', function(event) {
+        tryItCheckbox.checked = false;
+        contentEl.innerHTML = contentBackup.innerHTML;
+        tocbot.refresh();
+      });
+    </script>
+
+    <script>
+        (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+        e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+        e.src='https://www.google-analytics.com/analytics.js';
+        r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+        ga('create','UA-76620957-1','auto');ga('send','pageview');
+    </script>
+  </body>
+</html>
